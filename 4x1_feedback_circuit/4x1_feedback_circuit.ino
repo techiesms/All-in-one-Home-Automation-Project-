@@ -38,10 +38,10 @@ BlynkTimer timer;
 
 
 // Pins of Fan Regulator Knob
-#define s1 13
-#define s2 12 
-#define s3 14
-#define s4 27
+#define s1  27 
+#define s2  14
+#define s3  12
+#define s4  13
 
 
 // Pins of Switches
@@ -144,8 +144,8 @@ void setup()
 {
   // put your setup code here, to run once:
   pinMode(s1, INPUT);
-  pinMode(s2, INPUT_PULLUP);
-  pinMode(s3, INPUT);
+  pinMode(s2, INPUT);
+  pinMode(s3, INPUT_PULLUP);
   pinMode(s4, INPUT);
   pinMode(S5, INPUT);
   pinMode(S6, INPUT);
@@ -262,9 +262,9 @@ void with_internet()
   {
     if (switch_ON_Flag1_previous_I == 0 )
     {
-      digitalWrite(R5, LOW);
+      digitalWrite(R5, HIGH);
       if (DEBUG_SW) Serial.println("Relay1- ON");
-      Blynk.virtualWrite(V1, 0);
+      Blynk.virtualWrite(V1, 1);
       switch_ON_Flag1_previous_I = 1;
     }
     if (DEBUG_SW) Serial.println("Switch1 -ON");
@@ -274,9 +274,9 @@ void with_internet()
   {
     if (switch_ON_Flag1_previous_I == 1)
     {
-      digitalWrite(R5, HIGH);
+      digitalWrite(R5, LOW);
       if (DEBUG_SW) Serial.println("Relay1 OFF");
-      Blynk.virtualWrite(V1, 1);
+      Blynk.virtualWrite(V1, 0);
       switch_ON_Flag1_previous_I = 0;
     }
     if (DEBUG_SW)Serial.println("Switch1 OFF");
@@ -287,9 +287,9 @@ void with_internet()
   {
     if (switch_ON_Flag2_previous_I == 0 )
     {
-      digitalWrite(R6, LOW);
+      digitalWrite(R6, HIGH);
       if (DEBUG_SW)  Serial.println("Relay2- ON");
-      Blynk.virtualWrite(V2, 0);
+      Blynk.virtualWrite(V2, 1);
       switch_ON_Flag2_previous_I = 1;
     }
     if (DEBUG_SW) Serial.println("Switch2 -ON");
@@ -299,9 +299,9 @@ void with_internet()
   {
     if (switch_ON_Flag2_previous_I == 1)
     {
-      digitalWrite(R6, HIGH);
+      digitalWrite(R6, LOW);
       if (DEBUG_SW) Serial.println("Relay2 OFF");
-      Blynk.virtualWrite(V2, 1);
+      Blynk.virtualWrite(V2, 0);
       switch_ON_Flag2_previous_I = 0;
     }
     if (DEBUG_SW)Serial.println("Switch2 OFF");
@@ -312,9 +312,9 @@ void with_internet()
   {
     if (switch_ON_Flag3_previous_I == 0 )
     {
-      digitalWrite(R7, LOW);
+      digitalWrite(R7, HIGH);
       if (DEBUG_SW) Serial.println("Relay3- ON");
-      Blynk.virtualWrite(V3, 0);
+      Blynk.virtualWrite(V3, 1);
       switch_ON_Flag3_previous_I = 1;
     }
     if (DEBUG_SW) Serial.println("Switch3 -ON");
@@ -324,9 +324,9 @@ void with_internet()
   {
     if (switch_ON_Flag3_previous_I == 1)
     {
-      digitalWrite(R7, HIGH);
+      digitalWrite(R7, LOW);
       if (DEBUG_SW) Serial.println("Relay3 OFF");
-      Blynk.virtualWrite(V3, 1);
+      Blynk.virtualWrite(V3, 0);
       switch_ON_Flag3_previous_I = 0;
     }
     if (DEBUG_SW)Serial.println("Switch3 OFF");
@@ -337,9 +337,9 @@ void with_internet()
   {
     if (switch_ON_Flag4_previous_I == 0 )
     {
-      digitalWrite(R8, LOW);
+      digitalWrite(R8, HIGH);
       if (DEBUG_SW) Serial.println("Relay4- ON");
-      Blynk.virtualWrite(V4, 0);
+      Blynk.virtualWrite(V4, 1);
       switch_ON_Flag4_previous_I = 1;
     }
     if (DEBUG_SW) Serial.println("Switch4 -ON");
@@ -349,9 +349,9 @@ void with_internet()
   {
     if (switch_ON_Flag4_previous_I == 1)
     {
-      digitalWrite(R8, HIGH);
+      digitalWrite(R8, LOW);
       if (DEBUG_SW) Serial.println("Relay4 OFF");
-      Blynk.virtualWrite(V4, 1);
+      Blynk.virtualWrite(V4, 0);
       switch_ON_Flag4_previous_I = 0;
     }
     if (DEBUG_SW)Serial.println("Switch4 OFF");
@@ -427,10 +427,10 @@ void without_internet()
 
   
   // FOR SWITCH 
-  digitalWrite(R5, digitalRead(S5));
-  digitalWrite(R6, digitalRead(S6));
-  digitalWrite(R7, digitalRead(S7));
-  digitalWrite(R8, digitalRead(S8));
+  digitalWrite(R5, !digitalRead(S5));
+  digitalWrite(R6, !digitalRead(S6));
+  digitalWrite(R7, !digitalRead(S7));
+  digitalWrite(R8, !digitalRead(S8));
 }
 
 
