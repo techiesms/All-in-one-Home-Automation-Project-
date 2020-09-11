@@ -1,24 +1,24 @@
 /*************************************************************
- This is the code for All in one Home Automation project by techiesms.
+  This is the code for All in one Home Automation project by techiesms.
 
-Features of this project:
+  Features of this project:
 
- - Using this project, you can control 4 AC appliances and control speed of 1 AC fan.
- 
- - It works with Internet using Blynk app and also without internet using manual switches
+  - Using this project, you can control 4 AC appliances and control speed of 1 AC fan.
+
+  - It works with Internet using Blynk app and also without internet using manual switches
    and manual fan regulator.
 
- - You can also get real-time feedback of all the appliances on to your Blynk app.
+  - You can also get real-time feedback of all the appliances on to your Blynk app.
 
- - Using IFTTT, you can control all the applicanes using Google Assistant and Alexa.
+  - Using IFTTT, you can control all the applicanes using Google Assistant and Alexa.
 
- A full tutorial video on this project is uploaded on my YouTube channel.
- Have a look over it to know more
+  A full tutorial video on this project is uploaded on my YouTube channel.
+  Have a look over it to know more
 
- techiesms YouTube Channel - https://www.youtube.com/techiesms
+  techiesms YouTube Channel - https://www.youtube.com/techiesms
 
- Code written on - 7.09.20
-  
+  Code written on - 7.09.20
+
   Download latest Blynk library here:
   https://github.com/blynkkk/blynk-library/releases/latest
 
@@ -34,11 +34,11 @@ Features of this project:
 BlynkTimer timer;
 
 
-#define DEBUG_SW 0
+#define DEBUG_SW 1
 
 
 // Pins of Fan Regulator Knob
-#define s1  27 
+#define s1  27
 #define s2  14
 #define s3  12
 #define s4  13
@@ -151,7 +151,7 @@ void setup()
   pinMode(S6, INPUT);
   pinMode(S7, INPUT);
   pinMode(S8, INPUT);
-  
+
   pinMode(R5, OUTPUT);
   pinMode(R6, OUTPUT);
   pinMode(R7, OUTPUT);
@@ -162,9 +162,9 @@ void setup()
 
   Serial.begin(9600);
   WiFi.begin(ssid, pass);
-  
+
   timer.setInterval(3000L, checkBlynk); // check if connected to Blynk server every 3 seconds
-  
+
   Blynk.config(auth);//, ssid, pass);
 }
 
@@ -174,11 +174,11 @@ void loop()
 
   if (WiFi.status() != WL_CONNECTED)
   {
-    Serial.println("Not Connected");
+    if (DEBUG_SW) Serial.println("Not Connected");
   }
   else
   {
-    Serial.println(" Connected");
+    if (DEBUG_SW) Serial.println(" Connected");
     Blynk.run();
   }
 
@@ -196,12 +196,11 @@ void loop()
 void with_internet()
 {
 
-  // FOR FAN  
+  // FOR FAN
   if (digitalRead(s1) == LOW && speed1_flag == 1)
   {
     speed1();
     Blynk.virtualWrite(V0, 1);
-    Serial.println("SPEED 1");
     speed1_flag = 0;
     speed2_flag = 1;
     speed3_flag = 1;
@@ -214,7 +213,6 @@ void with_internet()
   {
     speed2();
     Blynk.virtualWrite(V0, 2);
-    Serial.println("SPEED 2");
     speed1_flag = 1;
     speed2_flag = 0;
     speed3_flag = 1;
@@ -226,7 +224,6 @@ void with_internet()
   {
     speed3();
     Blynk.virtualWrite(V0, 3);
-    Serial.println("SPEED 3");
     speed1_flag = 1;
     speed2_flag = 1;
     speed3_flag = 0;
@@ -237,7 +234,6 @@ void with_internet()
   {
     speed4();
     Blynk.virtualWrite(V0, 4);
-    Serial.println("SPEED 4");
     speed1_flag = 1;
     speed2_flag = 1;
     speed3_flag = 1;
@@ -248,7 +244,6 @@ void with_internet()
   {
     speed0();
     Blynk.virtualWrite(V0, 0);
-    Serial.println("SPEED 0");
     speed1_flag = 1;
     speed2_flag = 1;
     speed3_flag = 1;
@@ -256,7 +251,7 @@ void with_internet()
     speed0_flag = 0;
   }
 
-  
+
   // FOR SWITCH
   if (digitalRead(S5) == LOW)
   {
@@ -354,23 +349,22 @@ void with_internet()
       Blynk.virtualWrite(V4, 0);
       switch_ON_Flag4_previous_I = 0;
     }
-    if (DEBUG_SW)Serial.println("Switch4 OFF");
+    if (DEBUG_SW) Serial.println("Switch4 OFF");
     //delay(200);
   }
 
-  
+
 }
 
 
 void without_internet()
 {
-  
+
   // FOR FAN
   if (digitalRead(s1) == LOW && speed1_flag == 1)
   {
     speed1();
 
-    Serial.println("SPEED 1");
     speed1_flag = 0;
     speed2_flag = 1;
     speed3_flag = 1;
@@ -383,7 +377,6 @@ void without_internet()
   {
     speed2();
 
-    Serial.println("SPEED 2");
     speed1_flag = 1;
     speed2_flag = 0;
     speed3_flag = 1;
@@ -395,7 +388,6 @@ void without_internet()
   {
     speed3();
 
-    Serial.println("SPEED 3");
     speed1_flag = 1;
     speed2_flag = 1;
     speed3_flag = 0;
@@ -406,7 +398,6 @@ void without_internet()
   {
     speed4();
 
-    Serial.println("SPEED 4");
     speed1_flag = 1;
     speed2_flag = 1;
     speed3_flag = 1;
@@ -417,7 +408,7 @@ void without_internet()
   {
     speed0();
 
-    Serial.println("SPEED 0");
+
     speed1_flag = 1;
     speed2_flag = 1;
     speed3_flag = 1;
@@ -425,8 +416,8 @@ void without_internet()
     speed0_flag = 0;
   }
 
-  
-  // FOR SWITCH 
+
+  // FOR SWITCH
   digitalWrite(R5, !digitalRead(S5));
   digitalWrite(R6, !digitalRead(S6));
   digitalWrite(R7, !digitalRead(S7));
@@ -440,7 +431,7 @@ void without_internet()
 void speed0()
 {
   //All Relays Off - Fan at speed 0
-  
+  if (DEBUG_SW)Serial.println("SPEED 0");
   digitalWrite(Speed1, LOW);
   digitalWrite(Speed2, LOW);
   digitalWrite(Speed4, LOW);
@@ -450,33 +441,33 @@ void speed0()
 void speed1()
 {
   //Speed1 Relay On - Fan at speed 1
-
+  if (DEBUG_SW)Serial.println("SPEED 1");
   digitalWrite(Speed1, LOW);
   digitalWrite(Speed2, LOW);
   digitalWrite(Speed4, LOW);
-  delay(500);
+  delay(1000);
   digitalWrite(Speed1, HIGH);
 }
 
 void speed2()
 {
   //Speed2 Relay On - Fan at speed 2
-
+  if (DEBUG_SW)Serial.println("SPEED 2");
   digitalWrite(Speed1, LOW);
   digitalWrite(Speed2, LOW);
   digitalWrite(Speed4, LOW);
-  delay(500);
+  delay(1000);
   digitalWrite(Speed2, HIGH);
 }
 
 void speed3()
 {
   //Speed1 & Speed2 Relays On - Fan at speed 3
-
+  if (DEBUG_SW)Serial.println("SPEED 3");
   digitalWrite(Speed1, LOW);
   digitalWrite(Speed2, LOW);
   digitalWrite(Speed4, LOW);
-  delay(500);
+  delay(1000);
   digitalWrite(Speed1, HIGH);
   digitalWrite(Speed2, HIGH);
 
@@ -485,11 +476,11 @@ void speed3()
 void speed4()
 {
   //Speed4 Relay On - Fan at speed 4
-
+  if (DEBUG_SW)Serial.println("SPEED 4");
   digitalWrite(Speed1, LOW);
   digitalWrite(Speed2, LOW);
   digitalWrite(Speed4, LOW);
-  delay(500);
+  delay(1000);
   digitalWrite(Speed4, HIGH);
 }
 
