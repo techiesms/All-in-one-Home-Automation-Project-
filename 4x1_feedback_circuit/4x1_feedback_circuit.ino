@@ -1,5 +1,5 @@
-/*************************************************************
-  This is the code for All in one Home Automation project by techiesms.
+/**********************************************************************
+  This is the code for All in one Home Automation Project by techiesms.
 
   Features of this project:
 
@@ -26,7 +26,7 @@
     explore | learn | share
 
 
- *************************************************************/
+ **********************************************************************/
 
 #include <WiFi.h>
 #include <WiFiClient.h>
